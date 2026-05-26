@@ -314,17 +314,51 @@ main{position:relative;z-index:5;max-width:1200px;margin:0 auto;padding:20px;}
 <section id="numerologia" class="section">
   <div class="section-title">🔢 Numerología Grabovoi</div>
   <p class="section-desc">Códigos sagrados para sanación y manifestación</p>
-  <div class="user-input">
-    <input class="mystic-input" id="numName" placeholder="👤 Tu nombre...">
-    <input class="mystic-input" type="date" id="numDob">
+
+  <!-- Numerología personal -->
+  <div style="max-width:500px;margin:0 auto 30px">
+    <div class="user-input">
+      <input class="mystic-input" id="numName" placeholder="👤 Tu nombre...">
+      <input class="mystic-input" type="date" id="numDob">
+    </div>
+    <div class="action-buttons">
+      <button class="btn-mystic" data-action="calcNumerologia">🔢 Calcular</button>
+    </div>
+    <div id="numerologiaResult"></div>
+    <div class="action-buttons" id="numerologiaActions" style="display:none">
+      <button class="btn-mystic btn-ia" data-action="getIA" data-type="numerologia">🤖 IA Interpreta</button>
+      <button class="btn-mystic btn-share" data-action="shareImg" data-type="numerologia">📸 Compartir</button>
+      <button class="btn-mystic btn-pdf" data-action="exportPDF" data-type="numerologia">📄 PDF</button>
+    </div>
   </div>
-  <div class="action-buttons">
-    <button class="btn-mystic" data-action="calcNumerologia">🔢 Calcular</button>
-  </div>
-  <div id="numerologiaResult"></div>
-  <div class="action-buttons" id="numerologiaActions" style="display:none">
-    <button class="btn-mystic btn-share" data-action="shareImg" data-type="numerologia">📸 Compartir</button>
-    <button class="btn-mystic btn-pdf" data-action="exportPDF" data-type="numerologia">📄 PDF</button>
+
+  <div class="ornament">✦ ✧ ✦</div>
+
+  <!-- Sinastría / Compatibilidad -->
+  <div class="section-title" style="font-size:1.1rem">❤️ Sinastría de Pareja</div>
+  <p class="section-desc">Descubre la energía de tu relación a través de la numerología sagrada</p>
+  <div style="max-width:600px;margin:0 auto">
+    <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-bottom:20px">
+      <div style="flex:1;min-width:200px">
+        <p style="color:var(--gold);text-align:center">👤 Persona 1</p>
+        <input class="mystic-input" id="synName1" placeholder="Nombre" style="width:100%;margin-bottom:8px">
+        <input class="mystic-input" type="date" id="synDob1" style="width:100%">
+      </div>
+      <div style="flex:1;min-width:200px">
+        <p style="color:var(--gold);text-align:center">👤 Persona 2</p>
+        <input class="mystic-input" id="synName2" placeholder="Nombre" style="width:100%;margin-bottom:8px">
+        <input class="mystic-input" type="date" id="synDob2" style="width:100%">
+      </div>
+    </div>
+    <div class="action-buttons">
+      <button class="btn-mystic" data-action="calcSynastry">💞 Calcular Compatibilidad</button>
+    </div>
+    <div id="synastryResult"></div>
+    <div class="action-buttons" id="synastryActions" style="display:none">
+      <button class="btn-mystic btn-ia" data-action="getIA" data-type="synastry">🤖 IA Interpreta</button>
+      <button class="btn-mystic btn-share" data-action="shareImg" data-type="synastry">📸 Compartir</button>
+      <button class="btn-mystic btn-pdf" data-action="exportPDF" data-type="synastry">📄 PDF</button>
+    </div>
   </div>
 </section>
 
@@ -344,7 +378,7 @@ main{position:relative;z-index:5;max-width:1200px;margin:0 auto;padding:20px;}
 
 <script>
 // ══════════════════════════════════════════════
-// DATOS
+// DATOS (igual que antes)
 // ══════════════════════════════════════════════
 const BASE = 'https://upload.wikimedia.org/wikipedia/commons/thumb/';
 const MAJOR_ARCANA = [
@@ -384,11 +418,7 @@ const MINOR_ARCANA = (()=>{
     pents:{As:BASE+'f/fd/Pents01.jpg/200px-Pents01.jpg','2':BASE+'9/9f/RWS_Tarot_Pents_02.jpg/200px-RWS_Tarot_Pents_02.jpg','3':BASE+'4/42/RWS_Tarot_Pents_03.jpg/200px-RWS_Tarot_Pents_03.jpg','4':BASE+'3/35/RWS_Tarot_Pents_04.jpg/200px-RWS_Tarot_Pents_04.jpg','5':BASE+'9/96/RWS_Tarot_Pents_05.jpg/200px-RWS_Tarot_Pents_05.jpg','6':BASE+'a/a6/RWS_Tarot_Pents_06.jpg/200px-RWS_Tarot_Pents_06.jpg','7':BASE+'6/6a/RWS_Tarot_Pents_07.jpg/200px-RWS_Tarot_Pents_07.jpg','8':BASE+'4/49/RWS_Tarot_Pents_08.jpg/200px-RWS_Tarot_Pents_08.jpg','9':BASE+'f/f0/RWS_Tarot_Pents_09.jpg/200px-RWS_Tarot_Pents_09.jpg','10':BASE+'4/42/RWS_Tarot_Pents_10.jpg/200px-RWS_Tarot_Pents_10.jpg',Sota:BASE+'e/ec/Pents11.jpg/200px-Pents11.jpg',Caballero:BASE+'d/d5/Pents12.jpg/200px-Pents12.jpg',Reina:BASE+'8/88/Pents13.jpg/200px-Pents13.jpg',Rey:BASE+'1/1c/Pents14.jpg/200px-Pents14.jpg'}
   };
   const nums=['As','2','3','4','5','6','7','8','9','10','Sota','Caballero','Reina','Rey'];
-  SUITS.forEach(s=>{
-    nums.forEach(n=>{
-      res.push({num:n,name:`${n} de ${names[s]}`,suitId:s,el:els[s],key:keys[s],emoji:'🃏',img:imgs[s]?.[n]||'',up:`El ${n} de ${names[s]} habla de ${keys[s].toLowerCase()}.`,rv:`El ${n} de ${names[s]} invertido sugiere bloqueos en ${keys[s].toLowerCase()}.`});
-    });
-  });
+  SUITS.forEach(s=>{nums.forEach(n=>{res.push({num:n,name:`${n} de ${names[s]}`,suitId:s,el:els[s],key:keys[s],emoji:'🃏',img:imgs[s]?.[n]||'',up:`El ${n} de ${names[s]} habla de ${keys[s].toLowerCase()}.`,rv:`El ${n} de ${names[s]} invertido sugiere bloqueos en ${keys[s].toLowerCase()}.`});});});
   return res;
 })();
 const ALL_TAROT=[...MAJOR_ARCANA,...MINOR_ARCANA];
@@ -546,7 +576,7 @@ function renderAll(){
 }
 
 // ══════════════════════════════════════════════
-// FUNCIONES DE CONSULTA
+// FUNCIONES DE CONSULTA (como antes)
 // ══════════════════════════════════════════════
 function drawDailyCard(){
   const name=document.getElementById('userName').value||'Viajero/a';
@@ -686,6 +716,11 @@ function doSpread(type){
   `);
   document.getElementById('tiradaActions').style.display='flex';
 }
+
+// ══════════════════════════════════════════════
+// NUMEROLOGÍA
+// ══════════════════════════════════════════════
+function reduceToSingle(n){while(n>9&&n!==11&&n!==22&&n!==33){n=n.toString().split('').reduce((a,b)=>a+parseInt(b),0);}return n;}
 function calcNumerologia(){
   const name=document.getElementById('numName').value||'Consultante';
   const dob=document.getElementById('numDob').value;
@@ -700,13 +735,55 @@ function calcNumerologia(){
     <div class="result-title">🔢 Numerología Sagrada de ${name}</div>
     ${lifePath?`<p style="text-align:center">Camino de vida: <span class="num-big">${lifePath}</span></p>`:''}
     <div class="cards-grid">${GRABOVOI.map(g=>`<div class="num-card" data-action="showGrabovoi" data-payload='${encodeObj(g)}' role="button" tabindex="0"><strong>${g.title}</strong><br><span style="font-size:2rem;font-family:'Cinzel Decorative',serif;color:var(--gold)">${g.seq}</span><p>${g.desc}</p></div>`).join('')}</div>
+    <div id="numerologiaIAResult"></div>
   `);
   document.getElementById('numerologiaActions').style.display='flex';
 }
-function reduceToSingle(n){while(n>9&&n!==11&&n!==22&&n!==33){n=n.toString().split('').reduce((a,b)=>a+parseInt(b),0);}return n;}
 
 // ══════════════════════════════════════════════
-// IA (Puter.js) con espera
+// SINASTRIAL (NUEVA FUNCIÓN)
+// ══════════════════════════════════════════════
+function calcSynastry(){
+  const n1=document.getElementById('synName1').value||'Persona 1';
+  const d1=document.getElementById('synDob1').value;
+  const n2=document.getElementById('synName2').value||'Persona 2';
+  const d2=document.getElementById('synDob2').value;
+  if(!d1||!d2){toast('Introduce ambas fechas de nacimiento');return;}
+
+  const lp1 = reduceToSingle(d1.replace(/-/g,'').split('').map(Number).reduce((a,b)=>a+b,0));
+  const lp2 = reduceToSingle(d2.replace(/-/g,'').split('').map(Number).reduce((a,b)=>a+b,0));
+  const diff = Math.abs(lp1-lp2);
+  let compat='';
+  if(diff===0) compat='Almas gemelas – conexión profunda y espejo.';
+  else if(diff<=2) compat='Compatibilidad muy alta, fluidez y entendimiento natural.';
+  else if(diff<=4) compat='Buena compatibilidad, pero requiere trabajo consciente.';
+  else if(diff<=6) compat='Compatibilidad media – retos y aprendizaje mutuo.';
+  else compat='Relación kármica – grandes lecciones espirituales.';
+
+  const loveSeq = GRABOVOI.find(g=>g.title==='Amor Verdadero')||GRABOVOI[2];
+  const unionSeq = { title:'Unión Sagrada', seq:'888 999 1', desc:'Armonización del vínculo amoroso.' };
+
+  STATE.synastry = {n1,d1,lp1,n2,d2,lp2,diff,compat};
+  document.getElementById('synastryResult').innerHTML = resultHTML('synastry',`
+    <div class="result-title">❤️ Compatibilidad entre ${n1} y ${n2}</div>
+    <div style="display:flex;justify-content:center;gap:30px;margin-bottom:20px">
+      <div><strong>${n1}</strong><br><span class="num-big" style="font-size:2rem">${lp1}</span></div>
+      <div><strong>${n2}</strong><br><span class="num-big" style="font-size:2rem">${lp2}</span></div>
+    </div>
+    <p style="text-align:center;font-style:italic">Diferencia numérica: ${diff}</p>
+    <div class="interp-card"><h3>💞 Análisis</h3><p>${compat}</p></div>
+    <div class="num-card" data-action="showGrabovoi" data-payload='${encodeObj(loveSeq)}' role="button" tabindex="0">
+      <strong>🔮 Código Grabovoi para el Amor</strong><br>
+      <span style="font-size:1.5rem;font-family:'Cinzel Decorative',serif;color:var(--gold)">${loveSeq.seq}</span>
+      <p>${loveSeq.desc}</p>
+    </div>
+    <div id="synastryIAResult"></div>
+  `);
+  document.getElementById('synastryActions').style.display='flex';
+}
+
+// ══════════════════════════════════════════════
+// IA (con casos para numerologia y synastry)
 // ══════════════════════════════════════════════
 function waitForPuter(){
   return new Promise((resolve)=>{
@@ -717,17 +794,24 @@ function waitForPuter(){
   });
 }
 async function getIA(type){
-  const el=document.getElementById(`${type}IAResult`);
+  let el=document.getElementById(`${type}IAResult`);
   if(!el)return;
   el.innerHTML=`<div class="loading"><div class="loading-spinner"></div> La IA medita tu lectura...</div>`;
   let prompt='';
   const s=STATE;
   if(type==='daily'&&s.daily) prompt=`Eres tarotista místico/a. Interpreta para ${s.daily.name} la carta del día: ${s.daily.card.name} ${s.daily.rev?'(invertida)':''}. 150 palabras. Español.`;
   else if(type==='tarot'&&s.tarot) prompt=`Eres tarotista experto/a. Pregunta: "${s.tarot.q||'Guía general'}". Carta: ${s.tarot.card.name} ${s.tarot.rev?'(invertida)':''}. 150 palabras. Español.`;
-  else if(type==='runa'&&s.runa) prompt=s.runa.type==='three'?`Eres völva experto/a. Tirada: ${s.runa.runes.map((x,i)=>`${['Pasado','Presente','Futuro'][i]}: ${x.r.name}`).join(', ')}. Interpreta como relato cohesionado de 200 palabras. Español.`:`Eres völva experto/a. Runa: ${s.runa.r.name} ${s.runa.rev?'(invertida)':''}. 140 palabras. Español.`;
+  else if(type==='runa'&&s.runa) prompt=s.runa.type==='three'?`Eres völva experto/a. Tirada: ${s.runa.runes.map((x,i)=>`${['Pasado','Presente','Futuro'][i]}: ${x.r.name}`).join(', ')}. 200 palabras. Español.`:`Eres völva experto/a. Runa: ${s.runa.r.name} ${s.runa.rev?'(invertida)':''}. 140 palabras. Español.`;
   else if(type==='luna'&&s.luna) prompt=`Eres sacerdote/sa lunar. Fase: ${s.luna.p.name}. 150 palabras: qué hacer, rituales, mensaje espiritual. Español.`;
-  else if(type==='dream'&&s.dream) prompt=`Eres intérprete de sueños junguiano/a. Sueño: "${s.dream.txt}". 200 palabras: simbolismo, consejo. Español.`;
-  else if(type==='tirada'&&s.tirada) prompt=`Eres tarotista maestro/a. Tirada: ${s.tirada.cfg.name}. Cartas: ${s.tirada.drawn.map(x=>`${x.pos}: ${x.c.name} ${x.rev?'(inv.)':''}`).join(' | ')}. Narrativa cohesionada de 250 palabras. Español.`;
+  else if(type==='dream'&&s.dream) prompt=`Eres intérprete de sueños junguiano/a. Sueño: "${s.dream.txt}". 200 palabras. Español.`;
+  else if(type==='tirada'&&s.tirada) prompt=`Eres tarotista maestro/a. Tirada: ${s.tirada.cfg.name}. Cartas: ${s.tirada.drawn.map(x=>`${x.pos}: ${x.c.name} ${x.rev?'(inv.)':''}`).join(' | ')}. 250 palabras. Español.`;
+  else if(type==='numerologia'&&s.numerologia){
+    const seqs = GRABOVOI.map(g=>`${g.title} (${g.seq})`).join(', ');
+    prompt=`Eres numerólogo/a y experto/a en códigos Grabovoi. ${s.numerologia.name} tiene camino de vida ${s.numerologia.lifePath}. Explícale el significado de este número y recomiéndale una secuencia Grabovoi de entre: ${seqs}. 200 palabras. Español.`;
+  }
+  else if(type==='synastry'&&s.synastry){
+    prompt=`Eres consejero/a de parejas usando numerología y códigos Grabovoi. ${s.synastry.n1} (camino ${s.synastry.lp1}) y ${s.synastry.n2} (camino ${s.synastry.lp2}) tienen una diferencia de ${s.synastry.diff}. Compatibilidad: ${s.synastry.compat}. Sugiere un código Grabovoi para fortalecer su unión y dales un consejo espiritual. 180 palabras. Español.`;
+  }
   if(!prompt){el.innerHTML='<div class="ia-interp"><h3>🤖 IA</h3><p>Realiza primero una consulta.</p></div>';return;}
   try{
     await waitForPuter();
@@ -742,7 +826,7 @@ async function getIA(type){
 }
 
 // ══════════════════════════════════════════════
-// CHAT MÍSTICO
+// CHAT MÍSTICO (sin cambios)
 // ══════════════════════════════════════════════
 async function sendChat(){
   const input=document.getElementById('chatInput');
@@ -775,7 +859,7 @@ function addChatMsg(type,text){
 }
 
 // ══════════════════════════════════════════════
-// MODAL
+// MODAL (sin cambios)
 // ══════════════════════════════════════════════
 function openModal(content){
   const overlay=document.createElement('div');
@@ -794,7 +878,7 @@ function openModal(content){
 }
 
 // ══════════════════════════════════════════════
-// TTS
+// TTS (sin cambios)
 // ══════════════════════════════════════════════
 const TTS={
   sy:window.speechSynthesis, ut:null, playing:false, paused:false,
@@ -848,7 +932,7 @@ function pp(pid,text){TTS.playing&&TTS.pid===pid?TTS.pause():TTS.paused&&TTS.pid
 function spd(s,pid,btn){document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');TTS.setSpd(s,pid);}
 
 // ══════════════════════════════════════════════
-// EXPORT
+// EXPORT (sin cambios)
 // ══════════════════════════════════════════════
 async function shareImg(type){
   const el=document.getElementById(`${type}-export`);
@@ -878,7 +962,7 @@ async function exportPDF(type){
 }
 
 // ══════════════════════════════════════════════
-// DELEGACIÓN DE EVENTOS
+// DELEGACIÓN DE EVENTOS (incluye nuevas acciones)
 // ══════════════════════════════════════════════
 document.addEventListener('click', function(e){
   const target=e.target.closest('[data-action]');
@@ -928,6 +1012,7 @@ document.addEventListener('click', function(e){
   else if(action==='dreamIA') dreamIA();
   else if(action==='doSpread'&&spread) doSpread(spread);
   else if(action==='calcNumerologia') calcNumerologia();
+  else if(action==='calcSynastry') calcSynastry();
   else if(action==='sendChat') sendChat();
   else if(action==='getIA'&&type) getIA(type);
   else if(action==='shareImg'&&type) shareImg(type);
